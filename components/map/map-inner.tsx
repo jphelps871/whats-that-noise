@@ -9,9 +9,10 @@ export default function MapInner() {
         center={[51.505, -0.09]}
         zoom={13}
         scrollWheelZoom={true}
-        zoomSnap={0.25}
-        zoomDelta={0.25}
+        zoomSnap={0}
+        zoomDelta={1}
         zoomControl={false}
+        wheelPxPerZoomLevel={3}
         style={{ height: "100%", width: "100%" }}
       >
         <TileLayer

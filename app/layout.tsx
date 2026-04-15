@@ -1,9 +1,11 @@
+import "./globals.css";
+import "leaflet/dist/leaflet.css";
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Map } from "@/components/map/map";
-import "leaflet/dist/leaflet.css";
+import { ToggleCardsOnMapProvider } from "@/providers/toggle-cards-on-map-provider";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -17,6 +19,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html
       lang="en"
@@ -24,9 +27,11 @@ export default function RootLayout({
     >
       <body className="overflow-hidden">
         <Map />
-        <div className="relative z-10 pointer-events-none m-2">
-          {children}
-        </div>
+        <ToggleCardsOnMapProvider>
+          <div className="relative z-10 pointer-events-none m-2">
+            {children}
+          </div>
+        </ToggleCardsOnMapProvider>
       </body>
     </html>
   );
