@@ -1,7 +1,8 @@
 "use client";
 
+import React from "react";
 import { useRouter } from "next/navigation";
-import { MapContainer, TileLayer, useMapEvent } from "react-leaflet";
+import { MapContainer, TileLayer, useMap, useMapEvent } from "react-leaflet";
 
 function GetLatLng() {
   const router = useRouter();
@@ -23,7 +24,7 @@ export default function MapInner() {
         zoomDelta={1}
         zoomControl={false}
         wheelPxPerZoomLevel={2}
-        style={{ height: "100%", width: "100%" }}
+        style={{ height: "100vh", width: "100vw" }}
       >
         <TileLayer
           attribution="&copy; OpenStreetMap contributors"

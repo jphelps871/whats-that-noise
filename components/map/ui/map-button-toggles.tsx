@@ -7,6 +7,6 @@ export function MapButtonToggles() {
   const { toggle, showToggle } = useToggleCardsOnMap();
 
   return (
-    <Button onClick={toggle} className="mt-4" variant="outline">{showToggle ? 'Hide' : 'Show'} Filters</Button>
+    <Button onClick={toggle} variant="outline">{showToggle ? 'Hide' : 'Show'} Filters</Button>
   )
 }
