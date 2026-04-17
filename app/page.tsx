@@ -1,8 +1,7 @@
-import { MapButtonToggles } from "@/components/layouts/map-button-toggles";
-import Filters from "@/components/map/filters";
+import { MapButtonToggles } from "@/components/map/ui/map-button-toggles";
+import Filters from "@/components/map/ui/filters";
 
-export default function Search() {
-
+export default function FiltersPage() {
   return (
     <>
       <div className="pointer-events-auto inline">

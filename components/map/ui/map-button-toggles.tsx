@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { useToggleCardsOnMap } from "@/providers/toggle-cards-on-map-provider";
 
 export function MapButtonToggles() {

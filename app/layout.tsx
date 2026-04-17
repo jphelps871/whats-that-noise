@@ -16,8 +16,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  map,
 }: Readonly<{
   children: React.ReactNode;
+  map: React.ReactNode;
 }>) {
 
   return (
@@ -30,6 +32,7 @@ export default function RootLayout({
         <ToggleCardsOnMapProvider>
           <div className="relative z-10 pointer-events-none m-2">
             {children}
+            {map}
           </div>
         </ToggleCardsOnMapProvider>
       </body>

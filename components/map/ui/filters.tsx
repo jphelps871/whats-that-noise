@@ -7,7 +7,7 @@ import { enGB } from "react-day-picker/locale";
 
 import * as React from "react"
 import { useToggleCardsOnMap } from "@/providers/toggle-cards-on-map-provider";
-import { Card, CardContent } from "../ui/card";
+import { Card, CardContent } from "../../ui/card";
 
 export default function Filters() {
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>();
