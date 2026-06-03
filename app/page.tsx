@@ -1,19 +1,16 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Field, FieldDescription, FieldLabel } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+import { MapButtonToggles } from "@/components/map/ui/map-button-toggles";
+import Filters from "@/components/map/ui/filters";
 
-export default function Home() {
+export default function FiltersPage() {
   return (
-    <Card className="w-full max-w-sm pointer-events-auto">
-      <CardContent>
-        <Field>
-          <FieldLabel htmlFor="input-demo-api-key">Search</FieldLabel>
-          <Input id="search" type="search" placeholder="Buckingham Palace" />
-          <FieldDescription>
-            Search anywhere to see noise levels, select filters below using the drop-down.
-          </FieldDescription>
-        </Field>
-      </CardContent>
-    </Card>
+    <>
+      <div className="pointer-events-auto inline">
+        <MapButtonToggles />
+      </div>
+
+      <div className="mt-2">
+        <Filters />
+      </div>
+    </>
   )
 }

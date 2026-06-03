@@ -1,6 +1,17 @@
 "use client";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import React from "react";
+import { useRouter } from "next/navigation";
+import { MapContainer, TileLayer, useMap, useMapEvent } from "react-leaflet";
+
+function GetLatLng() {
+  const router = useRouter();
+
+  useMapEvent('click', (e) => {
+    router.push(`/marker/add?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
+  })
+  return null
+}
 
 export default function MapInner() {
   return (
@@ -9,19 +20,17 @@ export default function MapInner() {
         center={[51.505, -0.09]}
         zoom={13}
         scrollWheelZoom={true}
-        zoomSnap={0.25}
-        zoomDelta={0.25}
+        zoomSnap={0}
+        zoomDelta={1}
         zoomControl={false}
-        style={{ height: "100%", width: "100%" }}
+        wheelPxPerZoomLevel={2}
+        style={{ height: "100vh", width: "100vw" }}
       >
         <TileLayer
           attribution="&copy; OpenStreetMap contributors"
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-
-        <Marker position={[51.505, -0.09]}>
-          <Popup>Hello 👋</Popup>
-        </Marker>
+        <GetLatLng />
       </MapContainer>
     </div>
   );
