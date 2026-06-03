@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Map } from "@/components/map/map";
 import { ToggleCardsOnMapProvider } from "@/providers/toggle-cards-on-map-provider";
+import { SessionProvider } from "@/components/providers/SessionProvider";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -29,12 +30,14 @@ export default function RootLayout({
     >
       <body className="overflow-hidden">
         <Map />
-        <ToggleCardsOnMapProvider>
-          <div className="relative z-10 pointer-events-none m-2">
-            {children}
-            {map}
-          </div>
-        </ToggleCardsOnMapProvider>
+        <SessionProvider>
+          <ToggleCardsOnMapProvider>
+            <div className="relative z-10 pointer-events-none m-2">
+              {children}
+              {map}
+            </div>
+          </ToggleCardsOnMapProvider>
+        </SessionProvider>
       </body>
     </html>
   );
