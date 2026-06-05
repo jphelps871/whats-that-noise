@@ -2,10 +2,10 @@
 
 import dynamic from "next/dynamic";
 
-const MapInner = dynamic(() => import("./map-inner"),
+const MapMain = dynamic(() => import("./map-main"),
   { ssr: false }
 );
 
 export function Map() {
-  return <MapInner />;
+  return <MapMain />;
 }
