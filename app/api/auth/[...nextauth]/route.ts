@@ -1,10 +1,6 @@
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-
-const requireEnv = (value: string | undefined, provider: string) => {
-  if (!value) throw new Error(`Missing ${provider} OAuth environment variable`);
-  return value
-}
+import { requireEnv } from "@/utils/handle-production-errors";
 
 const handler = NextAuth({
   providers: [
