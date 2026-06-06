@@ -48,9 +48,7 @@ export default function Login() {
               <Button
                 key={id}
                 className={className}
-                onClick={() => signIn(id, {
-                  callbackUrl: "/"
-                })}
+                onClick={() => signIn(id)}
               >
                 <Icon className="mr-2 h-4 w-4" />
                 Continue with {label}
