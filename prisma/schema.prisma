@@ -46,4 +46,7 @@ model Noise {
 
   userId Int?
   user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  lat String
+  lng String
 }

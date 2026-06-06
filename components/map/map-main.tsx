@@ -7,7 +7,7 @@ import { MapContainer, TileLayer, useMap, useMapEvent } from "react-leaflet";
 function GetLatLng() {
   const router = useRouter();
 
-  useMapEvent('click', (e) => {
+  useMapEvent('dblclick', (e) => {
     router.push(`/marker/add?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
   })
   return null
@@ -24,6 +24,7 @@ export default function MapInner() {
         zoomDelta={1}
         zoomControl={false}
         wheelPxPerZoomLevel={2}
+        doubleClickZoom={false}
         style={{ height: "100vh", width: "100vw" }}
       >
         <TileLayer

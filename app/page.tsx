@@ -1,16 +1,16 @@
-import { MapButtonToggles } from "@/components/map/ui/map-button-toggles";
-import Filters from "@/components/map/ui/filters";
+import { Filters } from "@/components/map/ui/filters";
+import { TopNav } from "@/components/layout/top-nav";
 
-export default function FiltersPage() {
+export default function Home() {
   return (
     <>
       <div className="pointer-events-auto inline">
-        <MapButtonToggles />
+        <TopNav />
       </div>
 
       <div className="mt-2">
         <Filters />
       </div>
     </>
-  )
+  );
 }

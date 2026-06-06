@@ -6,7 +6,7 @@ import { DateRangeCalendar } from "@/components/ui/date-range-calendar";
 import { useToggleCardsOnMap } from "@/providers/toggle-cards-on-map-provider";
 import { Card, CardContent } from "../../ui/card";
 
-export default function Filters() {
+export function Filters() {
   const { showToggle } = useToggleCardsOnMap();
 
   if (!showToggle) return;

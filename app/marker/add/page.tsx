@@ -1,4 +1,4 @@
-import FiltersPage from "@/app/page";
+import Home from "@/app/page";
 
 /*
   When user refreshes page, this acts as a sort of fallback so this page displays
@@ -6,5 +6,5 @@ import FiltersPage from "@/app/page";
 */
 
 export default function Page() {
-  return <FiltersPage />;
+  return <Home />;
 }
