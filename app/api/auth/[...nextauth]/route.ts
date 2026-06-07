@@ -1,6 +1,10 @@
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import { requireEnv } from "@/utils/handle-production-errors";
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
+import { PrismaClient } from "@prisma/client"
+
+const prisma = new PrismaClient();
 
 const handler = NextAuth({
   providers: [
@@ -15,7 +19,11 @@ const handler = NextAuth({
     strategy: "jwt",
   },
 
+  adapter: PrismaAdapter(prisma),
+
   secret: process.env.NEXTAUTH_SECRET,
 });
+
+console.log(handler);
 
 export { handler as GET, handler as POST };

@@ -21,7 +21,11 @@ describe('Login', () => {
 
     await userEvent.click(gitHubButton);
 
-    expect(mockSignIn).toHaveBeenCalledWith("github");
+    expect(mockSignIn).toHaveBeenCalledWith("github",
+      expect.objectContaining({
+        callbackUrl: expect.any(String) // Can include "/", "/marker/add", "marker/edit"
+      })
+    );
 
     vi.resetAllMocks();
   })
