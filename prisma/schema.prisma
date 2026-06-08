@@ -5,8 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -22,30 +21,43 @@ model User {
   noises Noise[]
 
   name     String
-  email    String   @unique
+  email    String @unique
   password String
-  role     String   // "admin" | "user"
+  role     String @default("user") // "admin" | "user"
+
+  accounts Account[]
+}
+
+model Account {
+  id                Int    @id @default(autoincrement())
+  provider          String
+  providerAccountId String
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  @@unique([provider, providerAccountId])
 }
 
 model Category {
-  id Int @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name String
+  name   String
   noises Noise[]
 }
 
 model Noise {
-  id Int @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  category   Category @relation(fields: [categoryId], references: [id])
   categoryId Int
-  category Category @relation(fields: [categoryId], references: [id])
 
+  user   User? @relation(fields: [userId], references: [id], onDelete: SetNull)
   userId Int?
-  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   lat String
   lng String
