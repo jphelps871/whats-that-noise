@@ -1,4 +1,5 @@
-import { prisma } from "@/prisma/client";
+import { prisma } from  "@/prisma/lib/client";
+import { requireEnv } from "@/lib/utils";
 
 const categories = [
   { name: "Construction" },
@@ -24,7 +25,7 @@ async function main() {
 main()
   .then(async () => {
     await prisma.$disconnect();
-    console.log("Category seed complete!")
+    console.log("Category and test user seed complete!")
   })
   .catch(async (e) => {
     console.error(e);

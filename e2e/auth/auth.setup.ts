@@ -1,5 +1,5 @@
 import { test as setup, expect } from '@playwright/test';
-import { requireEnv } from '@/utils/handle-production-errors';
+import { requireEnv } from '@/lib/utils';
 import path from 'path';
 
 const authFile = path.join(__dirname, '../../playwright/.auth/user.json');
