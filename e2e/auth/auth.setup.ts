@@ -7,15 +7,15 @@ const authFile = path.join(__dirname, '../../playwright/.auth/user.json');
 // Authentication using GitHub
 setup('authenticate', async ({ page }) => {
   await page.goto('/auth/login')
-  await page.getByRole('button', {name: /github/i}).click();
 
-  // Handle github login
-  await page.getByLabel('Username or email address').fill(requireEnv(process.env.GH_TEST_USER, "GH_TEST_USER"));
-  await page.getByLabel('Password').fill(requireEnv(process.env.GH_TEST_PASSWORD, "GH_TEST_PASSWORD"));
-  await page.getByRole('button', { name: 'Sign in' }).click();
+  // Handle credential login - Ensure TEST_USER and TEST_PASSWORD are set
+  await page.getByLabel('email').fill(requireEnv(process.env.TEST_USER, "TEST_USER"));
+  await page.getByLabel('Password').fill(requireEnv(process.env.TEST_PASSWORD, "TEST_PASSWORD"));
 
-  // Example URL '/marker/add?lat=0.5122837&lng=51.391272'
-  await page.waitForURL('/marker/**');
+  await page.getByRole('button', { name: 'Submit' }).click();
+
+  // Example URL '/marker/add?lat=0.5122837&lng=51.391272' or '/'
+  await page.waitForURL('/');
 
   // Save auth
   await page.context().storageState({ path: authFile });
