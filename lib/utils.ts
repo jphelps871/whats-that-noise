@@ -11,11 +11,4 @@ const requireEnv = (value: string | undefined, provider: string) => {
   return value
 }
 
-const errorValidation = (error: z.ZodError) => {
-  return {
-    success: false,
-    error: z.flattenError(error)
-  }
-}
-
-export { cn, requireEnv, errorValidation }
+export { cn, requireEnv }

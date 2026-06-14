@@ -3,7 +3,8 @@
 import { z } from "zod"
 import { registerUserSchema } from "@/lib/schemas/user"
 import { prisma } from "@/prisma/lib/client"
-import { errorValidation } from "@/lib/utils"
+import { errorValidation, errorCreation } from "@/lib/forms/applyServerErrors"
+import { createUser } from "@/prisma/lib/operations/auth"
 import { redirect } from "next/navigation"
 import bcrypt from "bcryptjs";
 
@@ -28,31 +29,17 @@ export async function registerUser(data: UserFormProps): Promise<ActionResponse<
     return errorValidation(result.error)
   }
 
-  // Check user does not already exist
   const user = await prisma.user.findUnique({where: {
     email: data.email
   }})
 
   if (user) {
-    return {
-      success: false,
-      error: {
-        fieldErrors: {
-          email: ["Email already exists"]
-        },
-      }
-    }
+    return errorCreation(false, {
+      email: "Email already exists"
+    })
   }
 
-  const hashedPassword = await bcrypt.hash(data.password, 12);
-
-  await prisma.user.create({ 
-    data: {
-      name: data.name,
-      email: data.email,
-      password: hashedPassword
-    }
-  })
+  await createUser(data)
 
   redirect('/auth/login');
 }
