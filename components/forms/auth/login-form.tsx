@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { signIn } from "next-auth/react"
 import { Label } from "@/components/ui/label";
@@ -9,7 +8,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { loginUserSchema } from "@/lib/schemas/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { AuthPage } from "@/components/auth/auth-page";
 
 type UserFormProps = z.infer<typeof loginUserSchema>;
 
@@ -33,7 +31,7 @@ export function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 mt-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 mt-4" noValidate>
       <div className="space-y-1">
         <Label htmlFor="email">Email</Label>
         <Input {...register("email")} aria-invalid={!!errors.email} type="email" id="email" />
@@ -50,7 +48,7 @@ export function LoginForm() {
         )}
       </div>
 
-      <Button className="mt-4 w-full">
+      <Button type="submit" className="mt-4 w-full">
         Submit
       </Button>
     </form>

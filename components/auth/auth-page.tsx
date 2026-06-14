@@ -1,5 +1,3 @@
-"use client";
-
 import PageWrapper from "@/components/ui/page-wrapper"
 import { Typography } from "@/components/ui/Typography"
 import { Button } from "@/components/ui/button"
@@ -42,7 +40,6 @@ const providers = [
 ];
 
 export function AuthPage({ title, subtitle, children }: AuthPageProps) {
-
   return (
     <PageWrapper>
       <div className="flex justify-center items-center h-full">

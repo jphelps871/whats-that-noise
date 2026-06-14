@@ -32,7 +32,7 @@ export function RegisterForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 mt-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 mt-4" noValidate>
       <div className="space-y-1">
         <Label htmlFor="name">Name</Label>
         <Input {...register("name")} aria-invalid={!!errors.name} id="name" />

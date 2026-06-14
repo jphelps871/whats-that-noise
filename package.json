@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "test": "vitest",
-    "test:ui": "vitest:ui",
+    "test:ui": "vitest --ui",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
@@ -50,6 +50,8 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6.0.2",
+    "@vitest/coverage-v8": "^4.1.8",
+    "@vitest/ui": "^4.1.8",
     "eslint": "^9",
     "eslint-config-next": "16.2.3",
     "jsdom": "^27.4.0",

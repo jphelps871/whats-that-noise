@@ -1,7 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
-import Login from "@/app/auth/login/page";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { AuthPage } from "@/components/auth/auth-page";
+import { LoginForm } from "@/components/forms/auth/login-form";
+import { Link } from "lucide-react";
 
 const { mockSignIn } = vi.hoisted(() => ({
   mockSignIn: vi.fn(),
@@ -11,15 +13,21 @@ vi.mock("next-auth/react", () => ({
   signIn: mockSignIn,
 }));
 
-describe('Login', () => {
+describe('<AuthPage />', () => {
   it('uses login("github") when corresponding button clicked', async () => {
+    const user = userEvent.setup();
+
     render(
-      <Login />
+      <AuthPage title="Login" subtitle={
+        <>Don't have an account?</>
+      }>
+        <LoginForm />
+      </AuthPage >
     );
 
     const gitHubButton = screen.getByRole('button', { name: /github/i });
 
-    await userEvent.click(gitHubButton);
+    await user.click(gitHubButton);
 
     expect(mockSignIn).toHaveBeenCalledWith("github",
       expect.objectContaining({
@@ -27,6 +35,7 @@ describe('Login', () => {
       })
     );
 
-    vi.resetAllMocks();
+    vi.resetAllMocks()
   })
 })
+
