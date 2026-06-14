@@ -8,7 +8,7 @@ import { registerUser } from "@/app/actions/auth";
 import { registerUserSchema } from "@/lib/schemas/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { applyServerErrors } from "@/lib/forms/applyServerErrors";
+import { applyServerErrors } from "@/lib/forms/error-handling";
 
 type UserFormProps = z.infer<typeof registerUserSchema>;
 
