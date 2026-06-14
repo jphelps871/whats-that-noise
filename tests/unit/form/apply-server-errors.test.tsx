@@ -1,4 +1,4 @@
-import { applyServerErrors } from "@/lib/forms/applyServerErrors";
+import { applyServerErrors, errorCreation } from "@/lib/forms/error-handling";
 import { describe, expect, it, vi } from "vitest";
 
 const userRegisterErrors = {
@@ -30,5 +30,17 @@ describe("applyServerErrors() converts backend errors (Zod) into frontend errors
     expect(setError).toHaveBeenCalledWith("password",
       { message: "Password must be at least 6 characters" }
     );
+  })
+})
+
+const expectedCreatedError = { success: false, error: { fieldErrors: { email: ["Email already in use"] } } }
+
+describe("errorCreation() converts errors into Zod-like flattened error object that can be used by applyServerErrors()", () => {
+  it("matches expectedCreatedError object", () => {
+    const createdError = errorCreation({
+      email: "Email already in use"
+    })
+
+    expect(createdError).toMatchObject(expectedCreatedError);
   })
 })

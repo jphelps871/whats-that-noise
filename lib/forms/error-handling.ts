@@ -21,6 +21,7 @@ function applyServerErrors<T extends FieldValues>(
   )
 }
 
+// Handle and organise Zod created errors
 const errorValidation = (error: z.ZodError) => {
   return {
     success: false,
@@ -35,9 +36,10 @@ type FlattenedError = {
   }
 }
 
-const errorCreation = (success: boolean, errors: Record<string, string>) => {
+// Handle user created errors
+const errorCreation = (errors: Record<string, string>) => {
   const errorTemplate: FlattenedError = {
-    success,
+    success: false,
     error: {
       fieldErrors: {}
     }

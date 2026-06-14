@@ -3,10 +3,9 @@
 import { z } from "zod"
 import { registerUserSchema } from "@/lib/schemas/user"
 import { prisma } from "@/prisma/lib/client"
-import { errorValidation, errorCreation } from "@/lib/forms/applyServerErrors"
+import { errorValidation, errorCreation } from "@/lib/forms/error-handling"
 import { createUser } from "@/prisma/lib/operations/auth"
 import { redirect } from "next/navigation"
-import bcrypt from "bcryptjs";
 
 type UserFormProps = z.infer<typeof registerUserSchema>
 
@@ -34,7 +33,7 @@ export async function registerUser(data: UserFormProps): Promise<ActionResponse<
   }})
 
   if (user) {
-    return errorCreation(false, {
+    return errorCreation({
       email: "Email already exists"
     })
   }
