@@ -1,7 +1,7 @@
 import { expect, describe, it } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { TopNav } from '@/components/layout/top-nav'
-import { TestSessionWrapper } from '@/tests/test-utils'
+import { TestSessionWrapper } from '@/tests/utils/wrappers';
 import { ToggleCardsOnMapProvider } from '@/providers/toggle-cards-on-map-provider'
 
 describe('TopNav', () => {

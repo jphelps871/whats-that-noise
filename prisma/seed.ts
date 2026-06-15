@@ -1,35 +1,20 @@
-import { PrismaClient } from "@/generated/prisma/client";
-
-const prisma = new PrismaClient();
-
-const categories = [
-  { name: "Construction" },
-  { name: "Traffic" },
-  { name: "Aircraft" },
-  { name: "Trains / Rail" },
-  { name: "Industrial" },
-  { name: "People" },
-  { name: "Neighbours" },
-  { name: "Music / Events" },
-  { name: "Nightlife (bars, clubs, etc.)" },
-  { name: "Animals (dogs barking, etc.)" },
-  { name: "Unknown / Other" },
-]
+import { prisma } from  "@/prisma/lib/client";
+import { createTestUser } from "./seeders/users";
+import { createCategories } from "./seeders/categories";
 
 async function main() {
-  await prisma.category.createMany({
-    data: categories,
-    skipDuplicates: true
-  })
+  console.log("NODE_ENV:", process.env.NODE_ENV);
+
+  await createCategories();
+  await createTestUser();
 }
 
 main()
   .then(async () => {
-    await prisma.$disconnect();
-    console.log("Category seed complete!")
+    console.log("Seed complete!")
   })
   .catch(async (e) => {
     console.error(e);
-    await prisma.$disconnect();
     process.exit(1);
   })
+  .finally(async () => await prisma.$disconnect());
