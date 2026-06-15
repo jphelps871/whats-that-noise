@@ -1,4 +1,4 @@
-name: CI
+name: Postgres Setup
 
 on:
   push:
