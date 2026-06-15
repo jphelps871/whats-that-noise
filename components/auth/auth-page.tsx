@@ -2,6 +2,7 @@ import PageWrapper from "@/components/ui/page-wrapper"
 import { Typography } from "@/components/ui/Typography"
 import { Button } from "@/components/ui/button"
 import { signIn } from "next-auth/react"
+import { useSearchParams } from "next/navigation";
 import { SiGithub, SiGoogle, SiFacebook, SiApple } from "@icons-pack/react-simple-icons";
 import Link from "next/link"
 import React from "react";
@@ -40,6 +41,9 @@ const providers = [
 ];
 
 export function AuthPage({ title, subtitle, children }: AuthPageProps) {
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
+
   return (
     <PageWrapper>
       <div className="flex justify-center items-center h-full">
@@ -64,6 +68,12 @@ export function AuthPage({ title, subtitle, children }: AuthPageProps) {
                 Continue with {label}
               </Button>
             ))}
+
+            {error === "OAuthAccountNotLinked" && (
+              <Typography className="text-destructive text-sm">
+                An account already exists with this email address.
+              </Typography>
+            )}
 
             {/* Form */}
             {children}

@@ -8,6 +8,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { loginUserSchema } from "@/lib/schemas/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { redirect } from "next/navigation";
 
 type UserFormProps = z.infer<typeof loginUserSchema>;
 
@@ -20,14 +21,17 @@ export function LoginForm() {
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
-      callbackUrl: "/"
+      redirect: false
     });
 
     if (res?.error) {
       setError("email", { message: "Sorry, something went wrong." })
+      setError("password", { message: "Sorry, something went wrong." })
       console.log("Login failed");
       return;
     }
+
+    redirect("/");
   };
 
   return (

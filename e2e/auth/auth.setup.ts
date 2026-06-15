@@ -4,7 +4,7 @@ import path from 'path';
 
 const authFile = path.join(__dirname, '../../playwright/.auth/user.json');
 
-// Authentication using GitHub
+// Authentication using Credentials
 setup('authenticate', async ({ page }) => {
   await page.goto('/auth/login')
 
