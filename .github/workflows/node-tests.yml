@@ -17,7 +17,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
-          node-version: "24"
+          node-version: "24" # or whatever you're using
 
       - name: Install dependencies
         run: npm ci
