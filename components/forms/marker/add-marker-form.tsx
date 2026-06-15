@@ -3,19 +3,16 @@
 import { useSearchParams } from "next/navigation";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  SelectSeparator
-} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import type { Category } from "@prisma/client";
+import { CategoriesSelect } from "@/components/ui/forms/categories-select";
 import { DateRangeCalendar } from "@/components/ui/date-range-calendar";
 
-export default function AddMarkerForm() {
+type AddMarkerFormProps = {
+  categories: Category[]
+}
+
+export default function AddMarkerForm({ categories }: AddMarkerFormProps) {
   const searchParams = useSearchParams(); // Params from inner-map.tsx
 
   const lat = searchParams.get('lat');
@@ -26,39 +23,11 @@ export default function AddMarkerForm() {
       <div className="space-y-3">
         <div className="space-y-1.5">
           <Label htmlFor="description">Description</Label>
-          <Textarea id="description" name="description" placeholder="Fire alarm going off! It's been 2 days." />
+          <Textarea id="description" name="description" />
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="description">Category</Label>
-          <Select>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select a noise category" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="1">Construction</SelectItem>
-                <SelectItem value="2">Traffic</SelectItem>
-                <SelectItem value="3">Aircraft</SelectItem>
-                <SelectItem value="4">Trains / Rail</SelectItem>
-                <SelectItem value="5">Industrial</SelectItem>
-              </SelectGroup>
-              <SelectSeparator />
-              <SelectGroup>
-                <SelectItem value="6">People</SelectItem>
-                <SelectItem value="7">Neighbours</SelectItem>
-                <SelectItem value="8">Music / Events</SelectItem>
-                <SelectItem value="9">Nightlife (bars, clubs, etc.)</SelectItem>
-              </SelectGroup>
-              <SelectSeparator />
-              <SelectGroup>
-                <SelectItem value="10">Animals (dogs barking, etc.)</SelectItem>
-              </SelectGroup>
-              <SelectSeparator />
-              <SelectGroup>
-                <SelectItem value="11">Unknown / Other</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <CategoriesSelect categories={categories} />
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="description">Time</Label>

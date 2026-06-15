@@ -1,18 +1,16 @@
-import { DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import AddMarkerForm from "@/components/forms/marker/add-marker-form";
-import DialogWithRouterAsClose from "@/components/ui/dialog-with-router-as-close";
+import { MarkerPage } from "@/components/marker/marker-page";
+import { prisma } from "@/prisma/lib/client";
 
-export default function AddMarker() {
+export default async function AddMarker() {
+  const categories = await prisma.category.findMany();
+
   return (
-    <DialogWithRouterAsClose defaultOpen>
-      <DialogContent className="sm:max-w-2xl">
-        <DialogTitle>Add Noise</DialogTitle>
-        <DialogDescription>
-          You have just dropped down a marker, to save the noise fill out this form.
-        </DialogDescription>
+    <MarkerPage
+      title="Add Noise"
+      subtitle="You have just dropped down a marker, to save the noise fill out this form.">
 
-        <AddMarkerForm />
-      </DialogContent>
-    </DialogWithRouterAsClose>
+      <AddMarkerForm categories={categories} />
+    </MarkerPage>
   );
 }
