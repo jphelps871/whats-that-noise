@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
   title: "What's That Noise",
-  description: "Pinpoint or find annoying or loud noises",
+  description: "Find or add unknown noises in your area",
 };
 
 export default function RootLayout({
