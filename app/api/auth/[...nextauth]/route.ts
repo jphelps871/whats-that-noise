@@ -9,8 +9,8 @@ import bcrypt from "bcryptjs";
 const handler = NextAuth({
   providers: [
     GithubProvider({
-      clientId: requireEnv(process.env.GITHUB_ID, "GITHUB_ID"),
-      clientSecret: requireEnv(process.env.GITHUB_SECRET, "GITHUB_SECRET"),
+      clientId: requireEnv(process.env.AUTH_GITHUB_ID, "AUTH_GITHUB_ID"),
+      clientSecret: requireEnv(process.env.AUTH_GITHUB_SECRET, "AUTH_GITHUB_SECRET"),
     }),
 
     CredentialsProvider({
