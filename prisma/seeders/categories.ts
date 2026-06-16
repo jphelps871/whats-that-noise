@@ -1,6 +1,6 @@
 import { prisma } from "@/prisma/lib/client";
 
-const categories = [
+export const CATEGORIES = [
   { name: "Construction", group: "Infrastructure" },
   { name: "Traffic", group: "Infrastructure" },
   { name: "Aircraft", group: "Infrastructure" },
@@ -19,7 +19,7 @@ const categories = [
 
 export async function createCategories() {
   await prisma.category.createMany({
-    data: categories,
+    data: CATEGORIES,
     skipDuplicates: true
   })
 }

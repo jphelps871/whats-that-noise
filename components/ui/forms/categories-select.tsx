@@ -1,17 +1,18 @@
 import React from "react";
 import type { Category } from "@prisma/client";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectItem, SelectSeparator } from "../select";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectItem, SelectSeparator, SelectLabel } from "../select";
 
-const categoryGroups = ["infrastructure", "human", "animalsAndNature", "unclassified"] as const
+// CATEGORY_GROUPS must match groups in database seed @/prisma/seeders/categories.ts
+export const CATEGORY_GROUPS = ["Infrastructure", "Human", "Animals & Nature", "Unclassified"] as const
 
-const categoryGroupMap: Record<string, typeof categoryGroups[number]> = {
-  "Infrastructure": "infrastructure",
-  "Human": "human",
-  "Animals & Nature": "animalsAndNature",
-  "Unclassified": "unclassified"
+const categoryGroupMap: Record<string, typeof CATEGORY_GROUPS[number]> = {
+  "Infrastructure": "Infrastructure",
+  "Human": "Human",
+  "Animals & Nature": "Animals & Nature",
+  "Unclassified": "Unclassified",
 }
 
-type Categories = Record<typeof categoryGroups[number], string[]>
+type Categories = Record<typeof CATEGORY_GROUPS[number], string[]>
 
 export function CategoriesSelect({ categories: flatCategories }: { categories: Category[] }) {
 
@@ -24,7 +25,7 @@ export function CategoriesSelect({ categories: flatCategories }: { categories: C
     }
 
     return output;
-  }, { infrastructure: [], human: [], animalsAndNature: [], unclassified: [] } as Categories)
+  }, { "Infrastructure": [], "Human": [], "Animals & Nature": [], "Unclassified": [] } as Categories)
 
   return (
     <Select>
@@ -32,15 +33,17 @@ export function CategoriesSelect({ categories: flatCategories }: { categories: C
         <SelectValue placeholder="Select a noise category" />
       </SelectTrigger>
       <SelectContent>
-        {categoryGroups.map((group, index) => (
+        {CATEGORY_GROUPS.map((group, index) => (
           <React.Fragment key={group}>
             <SelectGroup>
+              <SelectLabel>{group}</SelectLabel>
+
               {categories[group].map(name => (
                 <SelectItem value={name} key={name}>{name}</SelectItem>
               ))}
             </SelectGroup>
 
-            {index !== categoryGroups.length - 1 && (
+            {index !== CATEGORY_GROUPS.length - 1 && (
               <SelectSeparator />
             )}
           </React.Fragment>
