@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 import { describe, it, expect } from "vitest";
 import { requireEnv } from "@/lib/utils";
 
-dotenv.config()
+dotenv.config() // Check .env not .env.test
 
 const expectVariableExist = (env: string | undefined, name: string) => {
     expect(requireEnv(env, name)).toBeTruthy();
