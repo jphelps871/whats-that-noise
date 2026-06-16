@@ -11,6 +11,10 @@ vi.mock("next-auth/react", () => ({
   signIn: signIn
 }))
 
+vi.mock("next/navigation", () => ({
+  redirect: vi.fn()
+}))
+
 describe('<LoginForm />', () => {
   afterEach(() => {
     cleanup();

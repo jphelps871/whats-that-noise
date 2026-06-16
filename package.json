@@ -4,11 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "test": "vitest",
+    "test:ci": "vitest",
     "test:ui": "vitest --ui",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:db:up": "docker-compose -f tests/docker/docker-compose.test.yml up -d",
+    "test:db:down": "docker-compose -f tests/docker/docker-compose.test.yml down -v",
+    "test:db:setup": "cross-env DATABASE_URL=postgresql://postgres:postgres@localhost:5433/noise_app_test npx prisma migrate deploy && npx prisma db seed",
+    "test:run": "cross-env DATABASE_URL=postgresql://postgres:postgres@localhost:5433/noise_app_test vitest run",
+    "test": "npm run test:db:up && npm run test:db:setup && npm run test:run && npm run test:db:down"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
@@ -52,6 +57,7 @@
     "@vitejs/plugin-react": "^6.0.2",
     "@vitest/coverage-v8": "^4.1.8",
     "@vitest/ui": "^4.1.8",
+    "cross-env": "^10.1.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.3",
     "jsdom": "^27.4.0",

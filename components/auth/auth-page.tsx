@@ -71,7 +71,7 @@ export function AuthPage({ title, subtitle, children }: AuthPageProps) {
 
             {error === "OAuthAccountNotLinked" && (
               <Typography className="text-destructive text-sm">
-                An account already exists with this email address.
+                Sorry, something went wrong.
               </Typography>
             )}
 
