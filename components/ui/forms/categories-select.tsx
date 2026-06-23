@@ -1,6 +1,10 @@
 import React from "react";
 import type { Category } from "@prisma/client";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectItem, SelectSeparator, SelectLabel } from "../select";
+import { Select as SelectPrimitive } from "radix-ui"
+import { Control, useController } from "react-hook-form";
+import { registerMarkerSchema } from "@/lib/schemas/marker";
+import { z } from "zod";
 
 // CATEGORY_GROUPS must match groups in database seed @/prisma/seeders/categories.ts
 export const CATEGORY_GROUPS = ["Infrastructure", "Human", "Animals & Nature", "Unclassified"] as const
@@ -13,8 +17,18 @@ const categoryGroupMap: Record<string, typeof CATEGORY_GROUPS[number]> = {
 }
 
 type Categories = Record<typeof CATEGORY_GROUPS[number], string[]>
+type CategorySelectProps = React.ComponentProps<typeof SelectPrimitive.Trigger> & {
+  categories: Category[],
+  control: Control<z.infer<typeof registerMarkerSchema>>,
+  name: "category"
+}
 
-export function CategoriesSelect({ categories: flatCategories }: { categories: Category[] }) {
+export function CategoriesSelect({ categories: flatCategories, control, name, ...props }: CategorySelectProps) {
+  // Handle setting form data using controller 
+  const { field } = useController({
+    control,
+    name
+  })
 
   // Convert flattened categories from DB into categories split by group
   const categories = flatCategories.reduce((output, category) => {
@@ -28,8 +42,11 @@ export function CategoriesSelect({ categories: flatCategories }: { categories: C
   }, { "Infrastructure": [], "Human": [], "Animals & Nature": [], "Unclassified": [] } as Categories)
 
   return (
-    <Select>
-      <SelectTrigger className="w-full">
+    <Select
+      value={field.value ?? ""}
+      onValueChange={field.onChange}
+    >
+      <SelectTrigger {...props} className="w-full">
         <SelectValue placeholder="Select a noise category" />
       </SelectTrigger>
       <SelectContent>

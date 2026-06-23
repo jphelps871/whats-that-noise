@@ -66,6 +66,8 @@ model Noise {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  timeOfNoise DateTime @default(now())
+
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
 
