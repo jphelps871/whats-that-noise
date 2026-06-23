@@ -1,4 +1,4 @@
-import { describe, expect, it, beforeEach, afterEach } from "vitest";
+import { describe, expect, it, beforeEach, afterEach, vi } from "vitest";
 import { CategoriesSelect } from "@/components/ui/forms/categories-select";
 import { cleanup, render, screen } from "@testing-library/react";
 import { prisma } from "@/prisma/lib/client";
@@ -6,14 +6,28 @@ import userEvent from "@testing-library/user-event";
 import { CATEGORY_GROUPS } from "@/components/ui/forms/categories-select";
 import { CATEGORIES } from "@/prisma/seeders/categories";
 
+
 const categoryNames = Object.entries(CATEGORIES).map(item => item[1].name);
+
+const mockedControl = {
+  register: vi.fn(),
+  unregister: vi.fn(),
+  getFieldState: vi.fn(),
+  _formState: { errors: {} },
+} as any
+
+vi.mock("react-hook-form", () => ({
+  useController: () => ({
+    field: vi.fn()
+  })
+}))
 
 describe("<CategoriesSelect />", () => {
   beforeEach(async () => {
     const user = userEvent.setup()
     const categories = await prisma.category.findMany();
 
-    render(<CategoriesSelect categories={categories} />)
+    render(<CategoriesSelect control={mockedControl} name="category" categories={categories} />)
 
     // Activate dropdown
     const dropdown = screen.getByRole("combobox");

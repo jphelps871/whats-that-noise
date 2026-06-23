@@ -13,7 +13,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { InputError } from "@/components/ui/input-error";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { useWatch } from "react-hook-form";
 
 type MarkerFormProps = z.infer<typeof registerMarkerSchema>
 
