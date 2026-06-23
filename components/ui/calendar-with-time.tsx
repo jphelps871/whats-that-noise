@@ -4,35 +4,30 @@ import { Clock2Icon } from "lucide-react"
 import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
-import { Typography } from "./Typography"
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group"
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group"
 import { useController } from "react-hook-form"
-import type { Control } from "react-hook-form"
-import { registerMarkerSchema } from "@/lib/schemas/marker"
-import { z } from "zod"
+import type { Control, FieldValues, Path } from "react-hook-form"
 
-type CalendarWithTimeProps = {
-  control: Control<z.infer<typeof registerMarkerSchema>>
-  name: "dateOfNoise"
+type CalendarWithTimeProps<T extends FieldValues> = {
+  control: Control<T>
+  name: Path<T>
 }
 
-export function CalendarWithTime({ control, name }: CalendarWithTimeProps) {
-  const { field } = useController({
-    control,
-    name,
-  });
+export function CalendarWithTime<T extends FieldValues>({ control, name }: CalendarWithTimeProps<T>) {
+  const { field } = useController({ control, name });
 
-  // Set default time
-  const currentTime = field.value.toLocaleTimeString("en-GB", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  if (!field.value) return <p className="text-destructive font-bold">No default date or time set!</p>
 
-  const handleDateOnChange = (date = field.value) => {
+  // Set value for time input
+  const currentTime = field.value.toLocaleTimeString("en-GB");
+
+  const handleDateOnChange = (date: Date | undefined) => {
+    // date should never be undefined
+    if (!date) {
+      console.error("Date is empty from Calendar");
+      return
+    }
+
     const current = field.value;
 
     const updated = new Date(current);
@@ -46,7 +41,7 @@ export function CalendarWithTime({ control, name }: CalendarWithTimeProps) {
   }
 
   const handleTimeOnChange = (time: string) => {
-    const [hours, minutes, seconds] = time.split(":").map(Number);
+    const [hours, minutes, seconds] = time.split(":").map(Number); // ensure is Number for date to be handled
 
     const updated = new Date(field.value);
     updated.setHours(hours, minutes, seconds, 0);
@@ -83,23 +78,14 @@ export function CalendarWithTime({ control, name }: CalendarWithTimeProps) {
                 id="time"
                 type="time"
                 step="1"
-                aria-describedby="time-helper"
+                value={currentTime}
                 onChange={(time) => handleTimeOnChange(time.target.value)}
-                defaultValue={currentTime}
                 className="appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
               />
               <InputGroupAddon>
                 <Clock2Icon className="text-muted-foreground" />
               </InputGroupAddon>
             </InputGroup>
-
-            {/* Note on time logic on submit */}
-            <Typography
-              id="time-helper"
-              className="text-wrap">
-              If you select a future date or time, it will automatically be
-              changed to the current time.
-            </Typography>
           </Field>
         </FieldGroup>
       </CardFooter>

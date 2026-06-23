@@ -33,10 +33,11 @@ export default function AddMarkerForm({ categories }: { categories: Category[] }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <InputError message={errors?.lat?.message} />
-      <InputError message={errors?.lng?.message} />
-
       <div className="space-y-3">
+        {/* There should always be lat and lng, if not throw valdiation errors here */}
+        <InputError message={errors?.lat?.message} />
+        <InputError className="mb-3" message={errors?.lng?.message} />
+
         <div className="space-y-1.5">
           <Label htmlFor="description">Description</Label>
           <Textarea {...register('description')} aria-invalid={!!errors.description} id="description" name="description" />

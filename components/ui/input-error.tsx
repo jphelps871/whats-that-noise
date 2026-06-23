@@ -1,3 +1,5 @@
-export function InputError({ message }: { message?: string }) {
-  return message && <p role="" className="text-destructive text-sm">{message}</p>
+import { cn } from "@/lib/utils"
+
+export function InputError({ message, className }: { message?: string, className?: string }) {
+  return message && <p role="" className={cn("text-destructive text-sm", className)}>{message}</p>
 }

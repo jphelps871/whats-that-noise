@@ -30,8 +30,6 @@ export function CategoriesSelect({ categories: flatCategories, control, name, ..
     name
   })
 
-  console.log(control);
-
   // Convert flattened categories from DB into categories split by group
   const categories = flatCategories.reduce((output, category) => {
     const key = categoryGroupMap[category.group];
