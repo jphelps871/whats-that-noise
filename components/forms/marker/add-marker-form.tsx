@@ -45,7 +45,7 @@ export default function AddMarkerForm({ categories }: { categories: Category[] }
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="category">Category</Label>
-          <CategoriesSelect control={control} name="category" aria-invalid={!!errors.category} categories={categories} />
+          <CategoriesSelect control={control} id="category" name="category" aria-invalid={!!errors.category} categories={categories} />
           <InputError message={errors?.category?.message} />
         </div>
         <div className="space-y-1.5">

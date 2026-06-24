@@ -6,7 +6,6 @@ import userEvent from "@testing-library/user-event";
 import { CATEGORY_GROUPS } from "@/components/ui/forms/categories-select";
 import { CATEGORIES } from "@/prisma/seeders/categories";
 
-
 const categoryNames = Object.entries(CATEGORIES).map(item => item[1].name);
 
 const mockedControl = {
