@@ -3,7 +3,7 @@ import type { Category } from "@prisma/client";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectItem, SelectSeparator, SelectLabel } from "../select";
 import { Select as SelectPrimitive } from "radix-ui"
 import { Control, useController } from "react-hook-form";
-import { registerMarkerSchema } from "@/lib/schemas/marker";
+import { type MarkerFormProps, registerMarkerSchema } from "@/lib/schemas/marker";
 import { z } from "zod";
 
 // CATEGORY_GROUPS must match groups in database seed @/prisma/seeders/categories.ts
@@ -19,7 +19,7 @@ const categoryGroupMap: Record<string, typeof CATEGORY_GROUPS[number]> = {
 type Categories = Record<typeof CATEGORY_GROUPS[number], string[]>
 type CategorySelectProps = React.ComponentProps<typeof SelectPrimitive.Trigger> & {
   categories: Category[],
-  control: Control<z.infer<typeof registerMarkerSchema>>,
+  control: Control<MarkerFormProps>,
   name: "category"
 }
 

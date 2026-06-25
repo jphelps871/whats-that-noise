@@ -7,34 +7,38 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { CategoriesSelect } from "@/components/ui/forms/categories-select";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { registerMarkerSchema } from "@/lib/schemas/marker";
+import { type MarkerFormProps, registerMarkerSchema } from "@/lib/schemas/marker";
 import { CalendarWithTime } from "@/components/ui/calendar-with-time";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InputError } from "@/components/ui/input-error";
-import { z } from "zod";
+import { createMarker } from "@/app/actions/marker/create-marker";
 import { Button } from "@/components/ui/button";
-
-type MarkerFormProps = z.infer<typeof registerMarkerSchema>
+import { applyServerErrors } from "@/lib/forms/error-handling";
 
 export default function AddMarkerForm({ categories }: { categories: Category[] }) {
-  const searchParams = useSearchParams(); // Params from inner-map.tsx
-  const { register, handleSubmit, control, formState: { errors } } = useForm<MarkerFormProps>({
+  const searchParams = useSearchParams(); // params from inner-map.tsx saved in URL
+  const { register, handleSubmit, setError, control, formState: { errors } } = useForm<MarkerFormProps>({
     resolver: zodResolver(registerMarkerSchema),
     defaultValues: {
       dateOfNoise: new Date(),
-      lat: searchParams.get('lat') ?? "",
-      lng: searchParams.get('lng') ?? "",
+      lat: Number(searchParams.get('lat') ?? ""),
+      lng: Number(searchParams.get('lng') ?? ""),
     }
   })
 
   const onSubmit: SubmitHandler<MarkerFormProps> = async (data) => {
-    console.log(data);
+    const res = await createMarker(data);
+
+    if (res && !res.success) {
+      const { fieldErrors } = res.error
+      applyServerErrors(fieldErrors, setError)
+    }
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="space-y-3">
-        {/* There should always be lat and lng, if not throw valdiation errors here */}
+        {/* There should always be lat and lng from URL, if not throw validation errors here */}
         <InputError message={errors?.lat?.message} />
         <InputError className="mb-3" message={errors?.lng?.message} />
 
@@ -49,7 +53,7 @@ export default function AddMarkerForm({ categories }: { categories: Category[] }
           <InputError message={errors?.category?.message} />
         </div>
         <div className="space-y-1.5">
-          <Label htmlFor="dateOfNoise">Date & Time</Label>
+          <Label htmlFor="timeOfNoise">Date & Time</Label>
           <div className="sm:w-1/2">
             <CalendarWithTime control={control} name="dateOfNoise" aria-invalid={!!errors.dateOfNoise} />
           </div>

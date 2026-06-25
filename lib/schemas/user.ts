@@ -14,3 +14,5 @@ export const loginUserSchema = z.object({
     .string()
     .min(6, "Password must be at least 6 characters"),
 })
+
+export type UserFormProps = z.infer<typeof registerUserSchema>

@@ -21,7 +21,7 @@ function applyServerErrors<T extends FieldValues>(
   )
 }
 
-// Handle and organise Zod created errors
+// Handle and organise Zod created errors into frontend readable errors
 const errorValidation = (error: z.ZodError) => {
   return {
     success: false,

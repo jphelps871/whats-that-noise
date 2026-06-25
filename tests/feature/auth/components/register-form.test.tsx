@@ -2,7 +2,7 @@ import { RegisterForm } from "@/components/forms/auth/register-form";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { getAuthForm } from "@/tests/utils/form-helpers";
 import { render, screen, cleanup } from "@testing-library/react";
-import { registerUser } from "@/app/actions/auth";
+import { registerUser } from "@/app/actions/auth/register-user";
 
 vi.mock("@/app/actions/auth", { spy: true });
 

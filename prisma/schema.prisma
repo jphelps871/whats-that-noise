@@ -62,11 +62,11 @@ model Category {
 }
 
 model Noise {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  timeOfNoise DateTime @default(now())
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  description String
+  dateOfNoise DateTime @default(now())
 
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
@@ -74,6 +74,6 @@ model Noise {
   user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
   userId String?
 
-  lat String
-  lng String
+  lat Float
+  lng Float
 }

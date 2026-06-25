@@ -8,12 +8,12 @@ import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/in
 import { useController } from "react-hook-form"
 import type { Control, FieldValues, Path } from "react-hook-form"
 
-type CalendarWithTimeProps<T extends FieldValues> = {
+type CalendarWithTimeProps<T extends FieldValues> = React.ComponentProps<"div"> & {
   control: Control<T>
   name: Path<T>
 }
 
-export function CalendarWithTime<T extends FieldValues>({ control, name }: CalendarWithTimeProps<T>) {
+export function CalendarWithTime<T extends FieldValues>({ control, name, ...props }: CalendarWithTimeProps<T>) {
   const { field } = useController({ control, name });
 
   if (!field.value) return <p className="text-destructive font-bold">No default date or time set!</p>
@@ -57,7 +57,7 @@ export function CalendarWithTime<T extends FieldValues>({ control, name }: Calen
   }
 
   return (
-    <Card size="sm" className="w-full">
+    <Card {...props} size="sm" className="w-full aria-invalid:border aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40">
       <CardContent>
         <Calendar
           mode="single"
