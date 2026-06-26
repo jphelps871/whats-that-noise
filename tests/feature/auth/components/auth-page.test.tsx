@@ -51,7 +51,7 @@ describe('<AuthPage />', () => {
 
     expect(mockSignIn).toHaveBeenCalledWith("github",
       expect.objectContaining({
-        callbackUrl: expect.any(String) // Can include "/", "/marker/add", "marker/edit"
+        callbackUrl: expect.any(String) // Can include "/", "/noise/add", "noise/edit"
       })
     );
 

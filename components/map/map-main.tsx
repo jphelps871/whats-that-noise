@@ -8,7 +8,7 @@ function GetLatLng() {
   const router = useRouter();
 
   useMapEvent('dblclick', (e) => {
-    router.push(`/marker/add?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
+    router.push(`/noise/add?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
   })
   return null
 }

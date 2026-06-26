@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
-import AddMarkerForm from "@/components/forms/marker/add-marker-form";
+import AddNoiseForm from "@/components/forms/noise/add-noise-form";
 import { CATEGORIES } from "@/prisma/seeders/categories";
 import { createPrismaRecord } from "@/tests/utils/create-prisma-record";
 
@@ -11,13 +11,13 @@ vi.mock("next/navigation", () => ({
   }),
 }));
 
-describe("<AddMarkerForm />", () => {
+describe("<AddNoiseForm />", () => {
   it("shows validation errors when submitted empty", async () => {
     const user = userEvent.setup();
 
     const prismaRecordOfCategories = createPrismaRecord(CATEGORIES)
 
-    render(<AddMarkerForm categories={prismaRecordOfCategories} />);
+    render(<AddNoiseForm categories={prismaRecordOfCategories} />);
 
     await user.click(screen.getByRole("button", { name: /submit/i }));
 

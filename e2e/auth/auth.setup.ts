@@ -14,7 +14,7 @@ setup('authenticate', async ({ page }) => {
 
   await page.getByRole('button', { name: 'Submit' }).click();
 
-  // Example URL '/marker/add?lat=0.5122837&lng=51.391272' or '/'
+  // Example URL '/noise/add?lat=0.5122837&lng=51.391272' or '/'
   await page.waitForURL('/');
 
   // Save auth

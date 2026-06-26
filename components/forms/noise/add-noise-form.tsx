@@ -7,18 +7,18 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { CategoriesSelect } from "@/components/ui/forms/categories-select";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { type MarkerFormProps, registerMarkerSchema } from "@/lib/marker/schema";
+import { type NoiseFormProps, registerNoiseSchema } from "@/lib/noise/schema";
 import { CalendarWithTime } from "@/components/ui/calendar-with-time";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InputError } from "@/components/ui/input-error";
-import { createMarker } from "@/lib/marker/actions/create";
+import { createNoise } from "@/lib/noise/actions/create";
 import { Button } from "@/components/ui/button";
 import { applyServerErrors } from "@/lib/forms/error-handling";
 
-export default function AddMarkerForm({ categories }: { categories: Category[] }) {
+export default function AddNoiseForm({ categories }: { categories: Category[] }) {
   const searchParams = useSearchParams(); // params from inner-map.tsx saved in URL
-  const { register, handleSubmit, setError, control, formState: { errors } } = useForm<MarkerFormProps>({
-    resolver: zodResolver(registerMarkerSchema),
+  const { register, handleSubmit, setError, control, formState: { errors } } = useForm<NoiseFormProps>({
+    resolver: zodResolver(registerNoiseSchema),
     defaultValues: {
       dateOfNoise: new Date(),
       lat: Number(searchParams.get('lat') ?? ""),
@@ -26,8 +26,8 @@ export default function AddMarkerForm({ categories }: { categories: Category[] }
     }
   })
 
-  const onSubmit: SubmitHandler<MarkerFormProps> = async (data) => {
-    const res = await createMarker(data);
+  const onSubmit: SubmitHandler<NoiseFormProps> = async (data) => {
+    const res = await createNoise(data);
 
     if (res && !res.success) {
       const { fieldErrors } = res.error

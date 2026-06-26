@@ -1,11 +1,11 @@
 "use server"
 
-import { type UserFormProps, registerUserSchema } from "@/lib/schemas/user"
+import { type UserFormProps, registerUserSchema } from "@/lib/auth/schema"
 import { prisma } from "@/prisma/lib/client"
 import { errorValidation, errorCreation } from "@/lib/forms/error-handling"
 import { createUser } from "@/prisma/lib/operations/auth"
 import { redirect } from "next/navigation"
-import { ActionResponse } from "../types"
+import { ActionResponse } from "@/lib/types/actions"
 
 export async function registerUser(data: UserFormProps): Promise<ActionResponse<void>> {
   const result = registerUserSchema.safeParse(data);
