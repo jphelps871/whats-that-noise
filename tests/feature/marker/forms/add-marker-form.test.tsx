@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
 import AddMarkerForm from "@/components/forms/marker/add-marker-form";
 import { CATEGORIES } from "@/prisma/seeders/categories";
-import { createPrismaRecords } from "@/tests/utils/db/category";
+import { createPrismaRecord } from "@/tests/utils/create-prisma-record";
 
 vi.mock("next/navigation", () => ({
   useSearchParams: () => ({
@@ -15,7 +15,7 @@ describe("<AddMarkerForm />", () => {
   it("shows validation errors when submitted empty", async () => {
     const user = userEvent.setup();
 
-    const prismaRecordOfCategories = createPrismaRecords(CATEGORIES)
+    const prismaRecordOfCategories = createPrismaRecord(CATEGORIES)
 
     render(<AddMarkerForm categories={prismaRecordOfCategories} />);
 
@@ -27,5 +27,7 @@ describe("<AddMarkerForm />", () => {
     expect(screen.getByLabelText("Category")).toHaveAttribute(
       "aria-invalid", "true"
     );
+
+    screen.debug();
   });
 });

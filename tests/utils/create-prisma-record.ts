@@ -11,7 +11,7 @@ const createPrismaRecordFields = () => ({
 
 type PrismaFields = ReturnType<typeof createPrismaRecordFields>
 
-const createPrismaRecords = <T>(data: T[]): (T & PrismaFields)[] => {
+const createPrismaRecord = <T>(data: T[]): (T & PrismaFields)[] => {
   const currentData = data.reduce((record, item) => {
     record.push({...createPrismaRecordFields(), ...item})
 
@@ -21,4 +21,4 @@ const createPrismaRecords = <T>(data: T[]): (T & PrismaFields)[] => {
   return currentData;
 }
 
-export { createPrismaRecords }
+export { createPrismaRecord }

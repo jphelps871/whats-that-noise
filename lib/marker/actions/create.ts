@@ -1,10 +1,9 @@
 "use server"
 
 import { prisma } from "@/prisma/lib/client"
-import { MarkerFormProps } from "@/lib/schemas/marker"
-import { registerMarkerSchema } from "@/lib/schemas/marker"
+import { type MarkerFormProps, registerMarkerSchema } from "@/lib/marker/schema"
 import { errorCreation, errorValidation } from "@/lib/forms/error-handling"
-import { auth } from "@/lib/auth"
+import { auth } from "@/lib/auth/config"
 import { redirect } from "next/navigation"
 
 export async function createMarker(data: MarkerFormProps) {

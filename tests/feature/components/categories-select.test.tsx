@@ -1,10 +1,10 @@
 import { describe, expect, it, beforeEach, afterEach, vi } from "vitest";
 import { CategoriesSelect } from "@/components/ui/forms/categories-select";
 import { cleanup, render, screen } from "@testing-library/react";
-import { prisma } from "@/prisma/lib/client";
 import userEvent from "@testing-library/user-event";
 import { CATEGORY_GROUPS } from "@/components/ui/forms/categories-select";
 import { CATEGORIES } from "@/prisma/seeders/categories";
+import { createPrismaRecord } from "@/tests/utils/create-prisma-record";
 
 const categoryNames = Object.entries(CATEGORIES).map(item => item[1].name);
 
@@ -24,7 +24,7 @@ vi.mock("react-hook-form", () => ({
 describe("<CategoriesSelect />", () => {
   beforeEach(async () => {
     const user = userEvent.setup()
-    const categories = await prisma.category.findMany();
+    const categories = createPrismaRecord(CATEGORIES);
 
     render(<CategoriesSelect control={mockedControl} name="category" categories={categories} />)
 

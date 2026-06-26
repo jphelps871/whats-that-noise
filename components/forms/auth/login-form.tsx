@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react"
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { loginUserSchema } from "@/lib/schemas/user";
+import { loginUserSchema } from "@/lib/auth/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { redirect } from "next/navigation";

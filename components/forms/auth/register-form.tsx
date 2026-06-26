@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { registerUser } from "@/app/actions/auth/register-user";
-import { registerUserSchema } from "@/lib/schemas/user";
+import { registerUser } from "@/lib/auth/actions/register";
+import { registerUserSchema } from "@/lib/auth/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InputError } from "@/components/ui/input-error";
 import { z } from "zod";

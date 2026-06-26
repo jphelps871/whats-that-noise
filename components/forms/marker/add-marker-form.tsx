@@ -7,11 +7,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { CategoriesSelect } from "@/components/ui/forms/categories-select";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { type MarkerFormProps, registerMarkerSchema } from "@/lib/schemas/marker";
+import { type MarkerFormProps, registerMarkerSchema } from "@/lib/marker/schema";
 import { CalendarWithTime } from "@/components/ui/calendar-with-time";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InputError } from "@/components/ui/input-error";
-import { createMarker } from "@/app/actions/marker/create-marker";
+import { createMarker } from "@/lib/marker/actions/create";
 import { Button } from "@/components/ui/button";
 import { applyServerErrors } from "@/lib/forms/error-handling";
 

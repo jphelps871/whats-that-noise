@@ -2,9 +2,9 @@ import { RegisterForm } from "@/components/forms/auth/register-form";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { getAuthForm } from "@/tests/utils/form-helpers";
 import { render, screen, cleanup } from "@testing-library/react";
-import { registerUser } from "@/app/actions/auth/register-user";
+import { registerUser } from "@/lib/auth/actions/register";
 
-vi.mock("@/app/actions/auth", { spy: true });
+vi.mock("@/lib/auth/actions/register", { spy: true });
 
 afterEach(() => {
   vi.resetAllMocks();
