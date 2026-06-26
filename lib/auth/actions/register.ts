@@ -1,9 +1,8 @@
 "use server"
 
 import { type UserFormProps, registerUserSchema } from "@/lib/auth/schema"
-import { prisma } from "@/prisma/lib/client"
 import { errorValidation, errorCreation } from "@/lib/forms/error-handling"
-import { createUser } from "@/prisma/lib/operations/auth"
+import { registerUserRepository } from "../repository"
 import { redirect } from "next/navigation"
 import { ActionResponse } from "@/lib/types/actions"
 
@@ -14,9 +13,7 @@ export async function registerUser(data: UserFormProps): Promise<ActionResponse<
     return errorValidation(result.error)
   }
 
-  const user = await prisma.user.findUnique({where: {
-    email: data.email
-  }})
+  const user = await registerUserRepository.findUserByEmail(data.email)
 
   if (user) {
     return errorCreation({
@@ -24,7 +21,7 @@ export async function registerUser(data: UserFormProps): Promise<ActionResponse<
     })
   }
 
-  await createUser(data)
+  await registerUserRepository.registerUser(data);
 
   redirect('/auth/login');
 }

@@ -9,6 +9,6 @@ export const noiseRepository = {
   },
 
   createNoise(data: CreateNoise) {
-    return prisma.noise.create({data: data})
+    return prisma.noise.create({ data })
   }
 }

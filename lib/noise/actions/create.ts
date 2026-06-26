@@ -5,8 +5,9 @@ import { errorCreation, errorValidation } from "@/lib/forms/error-handling"
 import { noiseRepository } from "../repository"
 import { auth } from "@/lib/auth/config"
 import { redirect } from "next/navigation"
+import { ActionResponse } from "@/lib/types/actions"
 
-export async function createNoise(data: NoiseFormProps) {
+export async function createNoise(data: NoiseFormProps): Promise<ActionResponse<void>> {
   const session = await auth();
 
   if (!session?.user) throw new Error("Unauthorised");
@@ -24,7 +25,7 @@ export async function createNoise(data: NoiseFormProps) {
     return errorCreation({category: `The category "${data.category}" does not exist, please select an existing category.`})
   }
 
-  const noise = await noiseRepository.createNoise({
+  await noiseRepository.createNoise({
     userId: userId,
     categoryId: category.id,
     lat: data.lat,
