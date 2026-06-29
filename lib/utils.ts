@@ -10,4 +10,7 @@ const requireEnv = (value: string | undefined, provider: string) => {
   return value
 }
 
+export const fetcher = (url: RequestInfo | URL, init?: RequestInit) =>
+  fetch(url, init).then((res) => res.json());
+
 export { cn, requireEnv }

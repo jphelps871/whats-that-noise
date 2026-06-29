@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
 import { useRouter } from "next/navigation";
-import { MapContainer, TileLayer, useMap, useMapEvent } from "react-leaflet";
+import { MapContainer, TileLayer, useMapEvent } from "react-leaflet";
+import { DisplayMarkers } from "./display-markers";
 
 function GetLatLng() {
   const router = useRouter();
@@ -32,6 +32,7 @@ export default function MapInner() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <GetLatLng />
+        <DisplayMarkers />
       </MapContainer>
     </div>
   );

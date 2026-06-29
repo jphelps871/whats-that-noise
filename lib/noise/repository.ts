@@ -5,10 +5,14 @@ type CreateNoise = Prisma.NoiseUncheckedCreateInput
 
 export const noiseRepository = {
   findCategoryByName(name: string) {
-    return prisma.category.findUnique({ where: { name } })
+    return prisma.category.findUnique({ where: { name } });
+  },
+
+  findManyNoises() {
+    return prisma.noise.findMany();
   },
 
   createNoise(data: CreateNoise) {
-    return prisma.noise.create({ data })
+    return prisma.noise.create({ data });
   }
 }
