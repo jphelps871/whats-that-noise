@@ -8,8 +8,15 @@ export const noiseRepository = {
     return prisma.category.findUnique({ where: { name } });
   },
 
-  findManyNoises() {
-    return prisma.noise.findMany();
+  findManyNoises({n, e, s, w}: {n: number, e: number, s: number, w: number}) {
+    return prisma.noise.findMany({
+      where: {
+        AND: [
+          { lat: { gte: s, lte: n } },
+          { lng: { gte: w, lte: e } },
+        ],
+      },
+    });
   },
 
   createNoise(data: CreateNoise) {

@@ -76,4 +76,6 @@ model Noise {
 
   lat Float
   lng Float
+
+  @@index([lat, lng])
 }

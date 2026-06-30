@@ -14,15 +14,24 @@ import { InputError } from "@/components/ui/input-error";
 import { createNoise } from "@/lib/noise/actions/create";
 import { Button } from "@/components/ui/button";
 import { applyServerErrors } from "@/lib/forms/error-handling";
+import { useRouter } from "next/navigation";
+import { useSWRConfig } from "swr";
 
 export default function AddNoiseForm({ categories }: { categories: Category[] }) {
   const searchParams = useSearchParams(); // params from inner-map.tsx saved in URL
+  const router = useRouter();
+
+  const lat = Number(searchParams.get("lat") ?? 0);
+  const lng = Number(searchParams.get("lng") ?? 0);
+
+  const { mutate } = useSWRConfig();
+
   const { register, handleSubmit, setError, control, formState: { errors } } = useForm<NoiseFormProps>({
     resolver: zodResolver(registerNoiseSchema),
     defaultValues: {
       dateOfNoise: new Date(),
-      lat: Number(searchParams.get('lat') ?? ""),
-      lng: Number(searchParams.get('lng') ?? ""),
+      lat,
+      lng,
     }
   })
 
@@ -33,6 +42,9 @@ export default function AddNoiseForm({ categories }: { categories: Category[] })
       const { fieldErrors } = res.error
       applyServerErrors(fieldErrors, setError)
     }
+
+    await mutate("/api/noise");
+    router.back();
   }
 
   return (
