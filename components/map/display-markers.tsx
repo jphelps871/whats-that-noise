@@ -5,6 +5,7 @@ import { Marker, Popup, useMap, useMapEvents } from "react-leaflet";
 import { useState } from "react";
 import useSWR from 'swr';
 import { Noise } from "@prisma/client";
+import debounce from 'debounce';
 
 const customIcon = L.icon({
   iconUrl: "/marker-icon.png",
@@ -34,13 +35,15 @@ export function DisplayMarkers() {
   const map = useMap();
   const [bounds, setBounds] = useState<Bounds>(getBoundsQuadrant(map.getBounds()));
 
-  const url = !bounds ? '/api/noise' : `/api/noise?n=${bounds.north}&s=${bounds.south}&e=${bounds.east}&w=${bounds.west}`
+  const url = `/api/noise?n=${bounds.north}&s=${bounds.south}&e=${bounds.east}&w=${bounds.west}`
 
   const { data, error, isLoading } = useSWR(url, fetcher);
 
   useMapEvents({
     moveend() {
-      setBounds(getBoundsQuadrant(map.getBounds()));
+      debounce(() => {
+        setBounds(getBoundsQuadrant(map.getBounds()));
+      }, 500)();
     }
   })
 
