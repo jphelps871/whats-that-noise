@@ -56,7 +56,7 @@ export function DisplayMarkers() {
   return (
     <>
       {data.map((noise: Noise) => (
-        <Marker key={noise.id} icon={customIcon} position={[noise.lat, noise.lng]}>
+        <Marker alt={noise.description} key={noise.id} icon={customIcon} position={[noise.lat, noise.lng]}>
           <Popup>{noise.description}</Popup>
         </Marker>
       ))}

@@ -9,6 +9,7 @@ vi.mock("next/navigation", () => ({
   useSearchParams: () => ({
     get: () => null,
   }),
+  useRouter: vi.fn()
 }));
 
 describe("<AddNoiseForm />", () => {

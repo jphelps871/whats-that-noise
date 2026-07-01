@@ -2,6 +2,8 @@ import AddNoiseForm from "@/components/forms/noise/add-noise-form";
 import { MarkerPage } from "@/components/marker/marker-page";
 import { prisma } from "@/prisma/lib/client";
 
+export const dynamic = 'force-dynamic'
+
 export default async function AddNoise() {
   const categories = await prisma.category.findMany();
 

@@ -2,7 +2,7 @@
 
 import type { Category } from "@prisma/client";
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { CategoriesSelect } from "@/components/ui/forms/categories-select";
@@ -14,7 +14,6 @@ import { InputError } from "@/components/ui/input-error";
 import { createNoise } from "@/lib/noise/actions/create";
 import { Button } from "@/components/ui/button";
 import { applyServerErrors } from "@/lib/forms/error-handling";
-import { useRouter } from "next/navigation";
 import { useSWRConfig } from "swr";
 
 export default function AddNoiseForm({ categories }: { categories: Category[] }) {
@@ -26,7 +25,7 @@ export default function AddNoiseForm({ categories }: { categories: Category[] })
 
   const { mutate } = useSWRConfig();
 
-  const { register, handleSubmit, setError, control, formState: { errors } } = useForm<NoiseFormProps>({
+  const { register, handleSubmit, setError, control, formState: { errors, isSubmitting } } = useForm<NoiseFormProps>({
     resolver: zodResolver(registerNoiseSchema),
     defaultValues: {
       dateOfNoise: new Date(),
@@ -39,11 +38,15 @@ export default function AddNoiseForm({ categories }: { categories: Category[] })
     const res = await createNoise(data);
 
     if (res && !res.success) {
-      const { fieldErrors } = res.error
-      applyServerErrors(fieldErrors, setError)
+      const { fieldErrors } = res.error;
+      applyServerErrors(fieldErrors, setError);
+      return;
     }
 
-    await mutate("/api/noise");
+    await mutate(
+      // Force data refresh on 'display-markers.tsx'
+      (key) => typeof key === "string" && key.startsWith("/api/noise")
+    );
     router.back();
   }
 
@@ -73,7 +76,7 @@ export default function AddNoiseForm({ categories }: { categories: Category[] })
         </div>
 
         <div className="space-y-1.5">
-          <Button className="w-full">Submit</Button>
+          <Button disabled={isSubmitting} className="w-full">{isSubmitting ? "...adding noise" : "Submit"}</Button>
         </div>
       </div>
     </form>

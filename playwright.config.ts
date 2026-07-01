@@ -6,6 +6,8 @@ import { defineConfig, devices } from '@playwright/test';
  */
 import dotenv from 'dotenv';
 import path from 'path';
+import { TEST_DATABASE_URL, TEST_PORT } from './e2e/test-env';
+
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 /**
@@ -26,11 +28,15 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:3001',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
   },
+
+  /* handle setup for running separate postgres (test)  */
+  globalSetup: require.resolve("./e2e/global-setup"),
+  globalTeardown: require.resolve("./e2e/global-teardown"),
 
   /* Configure projects for major browsers */
   projects: [
@@ -54,32 +60,18 @@ export default defineConfig({
       use: { ...devices['Desktop Safari'] },
       dependencies: ['setup'],
     },
-
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
   ],
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npm run build && npm run start',
-    url: 'http://localhost:3000',
+    command: "npm run build && npm run start",
+    url: `http://localhost:${TEST_PORT}`,
     reuseExistingServer: !process.env.CI,
+    env: {
+      ...process.env,
+      NEXTAUTH_URL: `http://localhost:${TEST_PORT}`,
+      DATABASE_URL: TEST_DATABASE_URL,
+      PORT: String(TEST_PORT), // next start respects PORT if no -p flag passed
+    },
   },
 });
