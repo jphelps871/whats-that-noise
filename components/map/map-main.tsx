@@ -1,14 +1,14 @@
 "use client";
 
-import React from "react";
 import { useRouter } from "next/navigation";
-import { MapContainer, TileLayer, useMap, useMapEvent } from "react-leaflet";
+import { MapContainer, TileLayer, useMapEvent } from "react-leaflet";
+import { DisplayMarkers } from "./display-markers";
 
 function GetLatLng() {
   const router = useRouter();
 
   useMapEvent('dblclick', (e) => {
-    router.push(`/marker/add?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
+    router.push(`/noise/add?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
   })
   return null
 }
@@ -29,9 +29,10 @@ export default function MapInner() {
       >
         <TileLayer
           attribution="&copy; OpenStreetMap contributors"
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
         />
         <GetLatLng />
+        <DisplayMarkers />
       </MapContainer>
     </div>
   );

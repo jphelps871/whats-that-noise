@@ -1,4 +1,5 @@
 import { UseFormSetError, FieldValues, Path } from "react-hook-form";
+import { ActionError } from "../types/actions";
 import { z } from "zod";
 
 function applyServerErrors<T extends FieldValues>(
@@ -21,8 +22,8 @@ function applyServerErrors<T extends FieldValues>(
   )
 }
 
-// Handle and organise Zod created errors
-const errorValidation = (error: z.ZodError) => {
+// Handle and organise Zod created errors into frontend readable errors
+const errorValidation = (error: z.ZodError): ActionError => {
   return {
     success: false,
     error: z.flattenError(error)
@@ -30,7 +31,7 @@ const errorValidation = (error: z.ZodError) => {
 }
 
 type FlattenedError = {
-  success: boolean,
+  success: false,
   error: {
     fieldErrors: Record<string, string[]>
   }

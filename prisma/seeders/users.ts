@@ -3,11 +3,16 @@ import bcrypt from "bcryptjs";
 import { prisma } from "@/prisma/lib/client";
 
 export async function createTestUser() {
-  await prisma.user.create({
-      data: {
-        name: "Test User",
-        email: requireEnv(process.env.TEST_USER, "TEST_USER"),
-        password: await bcrypt.hash(requireEnv(process.env.TEST_PASSWORD, "TEST_PASSWORD"), 12)
-      }
-    })
+  const email = requireEnv(process.env.TEST_USER, "TEST_USER");
+  const password = requireEnv(process.env.TEST_PASSWORD, "TEST_PASSWORD");
+
+  await prisma.user.upsert({
+    where: { email },
+    update: {},
+    create: {
+      name: "Test User",
+      email,
+      password: await bcrypt.hash(password, 12),
+    },
+  });
 }

@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { registerUser } from "@/app/actions/auth";
-import { registerUserSchema } from "@/lib/schemas/user";
+import { registerUser } from "@/lib/auth/actions/register";
+import { registerUserSchema } from "@/lib/auth/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { InputError } from "@/components/ui/input-error";
 import { z } from "zod";
 import { applyServerErrors } from "@/lib/forms/error-handling";
 
@@ -36,25 +37,19 @@ export function RegisterForm() {
       <div className="space-y-1">
         <Label htmlFor="name">Name</Label>
         <Input {...register("name")} aria-invalid={!!errors.name} id="name" />
-        {errors.name?.message && (
-          <p className="text-destructive text-sm">{errors.name.message}</p>
-        )}
+        <InputError message={errors?.name?.message} />
       </div>
 
       <div className="space-y-1">
         <Label htmlFor="email">Email</Label>
         <Input {...register("email")} aria-invalid={!!errors.email} type="email" id="email" />
-        {errors.email?.message && (
-          <p className="text-destructive text-sm">{errors.email.message}</p>
-        )}
+        <InputError message={errors?.email?.message} />
       </div>
 
       <div className="space-y-1">
         <Label htmlFor="password">Password</Label>
         <Input {...register("password")} aria-invalid={!!errors.password} type="password" id="password" />
-        {errors.password?.message && (
-          <p className="text-destructive text-sm">{errors.password.message}</p>
-        )}
+        <InputError message={errors?.password?.message} />
       </div>
 
       <Button className="mt-4 w-full">

@@ -17,15 +17,12 @@ const TypographyVariants = cva(
   }
 )
 
-type TypographyProps = VariantProps<typeof TypographyVariants> & {
-  className?: string;
-  children: React.ReactNode;
-};
+type TypographyProps = React.HTMLAttributes<HTMLElement> & VariantProps<typeof TypographyVariants>
 
-export function Typography({ className, children, variant = 'p', ...props }: TypographyProps) {
+export function Typography({ className, variant = 'p', ...props }: TypographyProps) {
   const Component = variant ?? 'p'
 
   return (
-    <Component {...props} className={TypographyVariants({ variant, className })}>{children}</Component>
+    <Component {...props} className={TypographyVariants({ variant, className })} />
   )
 }

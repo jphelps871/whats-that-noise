@@ -56,14 +56,18 @@ model Category {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name   String
+  name   String  @unique
+  colour String  @default("#6B7280")
+  group  String  @default("Unclassified") // Infrastructure & Transport | Human Activity | Animals & Nature | Unclassified
   noises Noise[]
 }
 
 model Noise {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  description String
+  dateOfNoise DateTime @default(now())
 
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
@@ -71,6 +75,8 @@ model Noise {
   user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
   userId String?
 
-  lat String
-  lng String
+  lat Float
+  lng Float
+
+  @@index([lat, lng])
 }

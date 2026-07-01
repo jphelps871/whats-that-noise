@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button"
 import { signIn } from "next-auth/react"
 import { SiGithub, SiGoogle, SiFacebook, SiApple } from "@icons-pack/react-simple-icons";
 import Link from "next/link"
-import React from "react";
+import React, { Suspense } from "react";
+import { AuthError } from "./auth-error";
 
 type AuthPageProps = {
   title: string,
@@ -64,6 +65,10 @@ export function AuthPage({ title, subtitle, children }: AuthPageProps) {
                 Continue with {label}
               </Button>
             ))}
+
+            <Suspense fallback={null}>
+              <AuthError />
+            </Suspense>
 
             {/* Form */}
             {children}

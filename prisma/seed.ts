@@ -3,8 +3,6 @@ import { createTestUser } from "./seeders/users";
 import { createCategories } from "./seeders/categories";
 
 async function main() {
-  console.log("NODE_ENV:", process.env.NODE_ENV);
-
   await createCategories();
   await createTestUser();
 }
