@@ -47,6 +47,6 @@ jobs:
       - run: npx prisma migrate deploy
       - run: npx prisma db seed
 
-      - run: npm run test:ci
+      - run: npm run test
       - run: npx playwright install --with-deps
       - run: npx playwright test
