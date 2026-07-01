@@ -1,4 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
+import { randomUUID } from 'crypto';
 
 test.use({ storageState: 'playwright/.auth/user.json' });
 
@@ -24,7 +25,7 @@ async function addMarker( page: Page, { position, description, category }: AddMa
 }
 
 async function findMarker(page: Page, description: string) {
-  await page.locator(`.leaflet-marker-icon[alt="${description}"]`).click();
+  await page.locator(`.category-marker-dot[data-description="${description}"]`).click();
   await expect(page.getByText(description)).toBeVisible({ timeout: 5000 });
 }
 
@@ -33,22 +34,23 @@ test('Add noise marker to map', async ({ page }) => {
 
   await page.waitForSelector('img.leaflet-tile'); // wait for leaflet to load
 
+  let description = `Weird noise ${randomUUID()}` // random values for all browsers tests
   await addMarker(page, {
     position: { x: 250, y: 180 },
-    description: "Weird noise",
+    description: description,
     category: "People",
   });
 
-  // Ensure popup appears with text
-  await findMarker(page, "Weird noise");
+  await findMarker(page, description);
 
   // Ensure users can add another marker – technically as many as they want
+  description = `Loud cars!!! ${randomUUID()}`
   await addMarker(page, {
     position: { x: 370, y: 280 },
-    description: "Loud cars!!!!!",
+    description: description,
     category: "Traffic",
   });
 
   // Ensure popup appears with text
-  await findMarker(page, "Loud cars!!!!!");
+  await findMarker(page, description);
 });

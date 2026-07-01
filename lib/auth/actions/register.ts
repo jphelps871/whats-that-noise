@@ -2,7 +2,7 @@
 
 import { type UserFormProps, registerUserSchema } from "@/lib/auth/schema"
 import { errorValidation, errorCreation } from "@/lib/forms/error-handling"
-import { registerUserRepository } from "../repository"
+import { registerUserRepository } from "@/lib/auth/repository"
 import { redirect } from "next/navigation"
 import { ActionResponse } from "@/lib/types/actions"
 

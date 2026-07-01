@@ -3,12 +3,17 @@ import { Prisma } from "@prisma/client"
 
 type CreateNoise = Prisma.NoiseUncheckedCreateInput
 
+type FindManyNoisesProps = {
+  n: number, e: number, s: number, w: number,
+  include?: Prisma.NoiseInclude
+}
+
 export const noiseRepository = {
   findCategoryByName(name: string) {
     return prisma.category.findUnique({ where: { name } });
   },
 
-  findManyNoises({n, e, s, w}: {n: number, e: number, s: number, w: number}) {
+  findManyNoises({n, e, s, w, include}: FindManyNoisesProps) {
     return prisma.noise.findMany({
       where: {
         AND: [
@@ -16,6 +21,8 @@ export const noiseRepository = {
           { lng: { gte: w, lte: e } },
         ],
       },
+      
+      include,
     });
   },
 

@@ -1,20 +1,20 @@
 import { prisma } from "@/prisma/lib/client";
 
 export const CATEGORIES = [
-  { name: "Construction", group: "Infrastructure" },
-  { name: "Traffic", group: "Infrastructure" },
-  { name: "Aircraft", group: "Infrastructure" },
-  { name: "Trains / Rail", group: "Infrastructure" },
-  { name: "Industrial", group: "Infrastructure" },
+  { name: "Construction", colour: "#F97316", group: "Infrastructure" },
+  { name: "Traffic", colour: "#EF4444", group: "Infrastructure" },
+  { name: "Aircraft", colour: "#3B82F6", group: "Infrastructure" },
+  { name: "Trains / Rail", colour: "#6366F1", group: "Infrastructure" },
+  { name: "Industrial", colour: "#78716C", group: "Infrastructure" },
 
-  { name: "People", group: "Human" },
-  { name: "Neighbours", group: "Human" },
-  { name: "Music / Events", group: "Human" },
-  { name: "Nightlife (bars, clubs, etc.)", group: "Human" },
+  { name: "People", colour: "#EC4899", group: "Human" },
+  { name: "Neighbours", colour: "#A855F7", group: "Human" },
+  { name: "Music / Events", colour: "#8B5CF6", group: "Human" },
+  { name: "Nightlife (bars, clubs, etc.)", colour: "#7C3AED", group: "Human" },
 
-  { name: "Animals (dogs barking, etc.)", group: "Animals & Nature" },
+  { name: "Animals (dogs barking, etc.)", colour: "#22C55E", group: "Animals & Nature" },
 
-  { name: "Unknown / Other", group: "Unclassified" },
+  { name: "Unknown / Other", colour: "#6B7280", group: "Unclassified" },
 ]
 
 export async function createCategories() {

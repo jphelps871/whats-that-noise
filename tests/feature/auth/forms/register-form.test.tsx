@@ -4,7 +4,13 @@ import { getAuthForm } from "@/tests/utils/form-helpers";
 import { render, screen, cleanup } from "@testing-library/react";
 import { registerUser } from "@/lib/auth/actions/register";
 
-vi.mock("@/lib/auth/actions/register", { spy: true });
+vi.mock("@/lib/auth/actions/register", () => ({
+  registerUser: vi.fn(),
+}));
+
+vi.mock("next/navigation", () => ({
+  redirect: vi.fn()
+}))
 
 afterEach(() => {
   vi.resetAllMocks();

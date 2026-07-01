@@ -57,6 +57,7 @@ model Category {
   updatedAt DateTime @updatedAt
 
   name   String  @unique
+  colour String  @default("#6B7280")
   group  String  @default("Unclassified") // Infrastructure & Transport | Human Activity | Animals & Nature | Unclassified
   noises Noise[]
 }

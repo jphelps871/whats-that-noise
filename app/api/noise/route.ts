@@ -18,7 +18,10 @@ export async function GET(request: Request) {
   const s = requireNumber(searchParams.get("s"), "s");
   const w  = requireNumber(searchParams.get("w"), "w");
 
-  const noises = await noiseRepository.findManyNoises({ n, e, s, w });
+  const noises = await noiseRepository.findManyNoises({ 
+    n, e, s, w,
+    include: {category: true}
+  });
 
   return NextResponse.json(noises);
 }

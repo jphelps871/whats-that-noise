@@ -4,22 +4,28 @@ import L from "leaflet";
 import { Marker, Popup, useMap, useMapEvents } from "react-leaflet";
 import { useState } from "react";
 import useSWR from 'swr';
-import { Noise } from "@prisma/client";
+import { Category, Noise } from "@prisma/client";
 import debounce from 'debounce';
-
-const customIcon = L.icon({
-  iconUrl: "/marker-icon.png",
-
-  iconSize: [40, 40], // width, height
-  iconAnchor: [20, 40],
-  popupAnchor: [0, -65],
-});
 
 type Bounds = {
   north: number
   east: number
   south: number
   west: number
+};
+
+type NoiseWithCategory = Omit<Noise, "categoryId"> & {
+  category: Category
+}
+
+export function createCategoryIcon(category: Category, description: string) {
+  return L.divIcon({
+    className: "category-marker", // see global.css
+    html: `<div data-description="${description}" class="category-marker-dot" style="background-color: ${category.colour}" title="${category.name}"></div>`,
+    iconSize: [18, 18],
+    iconAnchor: [9, 9], // center anchor as it's a circle not pin
+    popupAnchor: [0, -9],
+  });
 }
 
 const getBoundsQuadrant = (bounds: L.LatLngBounds) => {
@@ -52,11 +58,10 @@ export function DisplayMarkers() {
 
   if (!data) return null
 
-
   return (
     <>
-      {data.map((noise: Noise) => (
-        <Marker alt={noise.description} key={noise.id} icon={customIcon} position={[noise.lat, noise.lng]}>
+      {data.map((noise: NoiseWithCategory) => (
+        <Marker data-description={noise.description} key={noise.id} icon={createCategoryIcon(noise.category, noise.description)} position={[noise.lat, noise.lng]}>
           <Popup>{noise.description}</Popup>
         </Marker>
       ))}
