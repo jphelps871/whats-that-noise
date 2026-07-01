@@ -26,6 +26,9 @@ function waitForPostgres(retries = 30, delayMs = 1000) {
 }
 
 export default async function globalSetup() {
+  // CI already provides Postgres via the `services:` block
+  if (process.env.CI) return
+
   console.log("Closing previous docker...");
   execSync("docker-compose -f e2e/docker-compose.test.yml down -v", { stdio: "inherit" });
 
