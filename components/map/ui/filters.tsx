@@ -1,10 +1,8 @@
 "use client";
 
-import { Label } from "@/components/ui/label";
-import { DateRangeCalendar } from "@/components/ui/date-range-calendar";
-
 import { useToggleCardsOnMap } from "@/providers/toggle-cards-on-map-provider";
 import { Card, CardContent } from "../../ui/card";
+import { FilterNoiseForm } from "@/components/forms/noise/filter-noise-form";
 
 export function Filters() {
   const { showToggle } = useToggleCardsOnMap();
@@ -14,8 +12,7 @@ export function Filters() {
   return (
     <Card className="w-full max-w-sm pointer-events-auto">
       <CardContent>
-        <Label className="mb-1" htmlFor="search">Date</Label>
-        <DateRangeCalendar />
+        <FilterNoiseForm />
       </CardContent>
     </Card>
   )

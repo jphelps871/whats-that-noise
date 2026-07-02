@@ -15,10 +15,12 @@ import { createNoise } from "@/lib/noise/actions/create";
 import { Button } from "@/components/ui/button";
 import { applyServerErrors } from "@/lib/forms/error-handling";
 import { useSWRConfig } from "swr";
+import { useCategories } from "@/providers/categories-provider";
 
-export default function AddNoiseForm({ categories }: { categories: Category[] }) {
+export default function AddNoiseForm() {
   const searchParams = useSearchParams(); // params from inner-map.tsx saved in URL
   const router = useRouter();
+  const categories = useCategories();
 
   const lat = Number(searchParams.get("lat") ?? 0);
   const lng = Number(searchParams.get("lng") ?? 0);

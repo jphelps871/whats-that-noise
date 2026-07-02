@@ -6,7 +6,9 @@ import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Map } from "@/components/map/map";
 import { ToggleCardsOnMapProvider } from "@/providers/toggle-cards-on-map-provider";
+import { CategoriesProvider } from "@/providers/categories-provider";
 import { SessionProvider } from "@/components/providers/SessionProvider";
+import { getCategories } from "@/lib/categories/data";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -15,13 +17,14 @@ export const metadata: Metadata = {
   description: "Pinpoint or find annoying or loud noises.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   map,
 }: Readonly<{
   children: React.ReactNode;
   map: React.ReactNode;
 }>) {
+  const categories = await getCategories();
 
   return (
     <html
@@ -32,10 +35,12 @@ export default function RootLayout({
         <Map />
         <SessionProvider>
           <ToggleCardsOnMapProvider>
-            <div className="relative z-10 pointer-events-none m-2">
-              {children}
-              {map}
-            </div>
+            <CategoriesProvider categories={categories}>
+              <div className="relative z-10 pointer-events-none m-2">
+                {children}
+                {map}
+              </div>
+            </CategoriesProvider>
           </ToggleCardsOnMapProvider>
         </SessionProvider>
       </body>

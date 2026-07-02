@@ -11,4 +11,20 @@ export const registerNoiseSchema = z.object({
   ),
 })
 
+export const filterNoiseSchema = z.object({
+  category: z.string().min(1, "Please select a category"),
+  
+  dateRange: z.object({
+    from: z.date({error: "Start date is required"}).refine(
+      (date) => date <= new Date(),
+      {message: "Date cannot be in the future.",}
+    ),
+    to: z.date({error: "End date is required"}).refine(
+      (date) => date <= new Date(),
+      {message: "Date cannot be in the future.",}
+    ),
+  }),
+});
+
+export type FilterForm = z.infer<typeof filterNoiseSchema>;
 export type NoiseFormProps = z.input<typeof registerNoiseSchema>

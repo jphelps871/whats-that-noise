@@ -9,6 +9,10 @@ export default function Home() {
       </div>
 
       <div className="mt-2">
+        {/* 
+          Toggled from MapButtonToggles in top-nav.tsx. Using the provider 
+          toggle-cards-on-map-provider.tsx 
+        */}
         <Filters />
       </div>
     </>

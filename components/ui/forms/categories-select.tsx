@@ -2,9 +2,7 @@ import React from "react";
 import type { Category } from "@prisma/client";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectItem, SelectSeparator, SelectLabel } from "../select";
 import { Select as SelectPrimitive } from "radix-ui"
-import { Control, useController } from "react-hook-form";
-import { type NoiseFormProps, registerNoiseSchema } from "@/lib/noise/schema";
-import { z } from "zod";
+import { Control, FieldValues, Path, useController } from "react-hook-form";
 
 // CATEGORY_GROUPS must match groups in database seed @/prisma/seeders/categories.ts
 export const CATEGORY_GROUPS = ["Infrastructure", "Human", "Animals & Nature", "Unclassified"] as const
@@ -17,13 +15,14 @@ const categoryGroupMap: Record<string, typeof CATEGORY_GROUPS[number]> = {
 }
 
 type Categories = Record<typeof CATEGORY_GROUPS[number], string[]>
-type CategorySelectProps = React.ComponentProps<typeof SelectPrimitive.Trigger> & {
+
+type CategorySelectProps<T extends FieldValues> = React.ComponentProps<typeof SelectPrimitive.Trigger> & {
   categories: Category[],
-  control: Control<NoiseFormProps>,
-  name: "category"
+  control: Control<T>,
+  name: Path<T>
 }
 
-export function CategoriesSelect({ categories: flatCategories, control, name, ...props }: CategorySelectProps) {
+export function CategoriesSelect<T extends FieldValues>({ categories: flatCategories, control, name, ...props }: CategorySelectProps<T>) {
   // Handle setting form data using controller 
   const { field } = useController({
     control,
